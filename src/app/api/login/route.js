@@ -23,11 +23,7 @@ export async function GET(request) {
 		} else {
 			return new Response(JSON.stringify({ notFound: true }), { status: 200 });
 		}
-		
-		// return new Response('in testing phase');
 	} catch (error) {
-		console.log(error);
-		
 		return new Response(`Error: ${error.message}`, { status: 500 });
 	}
 }

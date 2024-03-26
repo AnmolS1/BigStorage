@@ -1,9 +1,13 @@
-import { Container, Link, Box, Avatar, Typography, TextField, InputLabel, InputAdornment, FormControlLabel, Checkbox, Button, Grid, IconButton, FormControl, OutlinedInput } from "@mui/material";
-import { VisibilityOff, Visibility, LockOutlined } from "@mui/icons-material";
+import { Container, Collapse, Alert, AlertTitle, Link, Box, Avatar, Typography, TextField, InputLabel, InputAdornment, FormControlLabel, Checkbox, Button, Grid, IconButton, FormControl, OutlinedInput, FormHelperText } from "@mui/material";
+import { VisibilityOff, Visibility, LockOutlined, Close } from "@mui/icons-material";
 import { useState } from "react";
 import axios from 'axios';
 
-export default function Login() {
+interface LoginProps {
+	onSuccessfulLogin: (username: string) => void;
+}
+
+export default function Login({ onSuccessfulLogin }: LoginProps) {
 	const [username, setUsername] = useState('');
 	
 	const [pass1, setPass1] = useState('');
@@ -18,6 +22,10 @@ export default function Login() {
 	const [showPass3, setShowPass3] = useState(false);
 	const handleShowPass3 = () => setShowPass3(show => !show);
 	
+	const [usernameError, setUsernameError] = useState(false);
+	const [passwordError, setPasswordError] = useState(false);
+	const [serverError, setServerError] = useState(false);
+	
 	const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
 	};
@@ -29,20 +37,20 @@ export default function Login() {
 			const data = response.data;
 			if (response.status != 500) {
 				if (data.notFound) {
-					// mark username field incorrect with "username is incorrect"
+					setUsernameError(true);
 				} else {
 					if (pass1 == data.password1.S && pass2 == data.password2.S && pass3 == data.password3.S) {
 						localStorage.setItem('username', username);
-						// tell parent user is logged in
+						onSuccessfulLogin(username);
 					} else {
-						// mark all password fields as incorrect "one or more passwords are incorrect" under the last one
+						setPasswordError(true);
 					}
 				}
 			} else {
-				// alert('some wack error occurred, try again in a bit');
+				setServerError(true);
 			}
 		}).catch(error => {
-			// alert('some wack error occurred, try again in a bit');
+			setServerError(true);
 		});
 	};
 	
@@ -56,6 +64,23 @@ export default function Login() {
 					alignItems: 'center',
 				}}
 			>
+				<Collapse in={serverError}>
+					<Alert
+						severity="error" sx={{ mb: 4 }}
+						action={
+							<IconButton
+								aria-label="close" color="inherit" size="small"
+								onClick={() => { setServerError(false); }}
+							>
+								<Close fontSize="inherit" />
+							</IconButton>
+						}
+					>
+						<AlertTitle>server error</AlertTitle>
+						some weirdo server error occurred, pls try again later broski
+					</Alert>
+				</Collapse>
+				
 				<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
 					<LockOutlined />
 				</Avatar>
@@ -65,11 +90,16 @@ export default function Login() {
 				<Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
 					<TextField
 						label="Username" id="username" name="username"
-						value={username} onChange={(e) => setUsername(e.target.value)}
+						value={username} onChange={(e) => {
+							setUsername(e.target.value);
+							setUsernameError(false);
+						}}
 						required fullWidth margin="normal"
 						autoComplete="username" autoFocus
+						error={usernameError}
+						helperText={usernameError ? 'username is incorrect' : ''}
 					/>
-					<FormControl fullWidth margin="normal">
+					<FormControl fullWidth margin="normal" error={passwordError}>
 						<InputLabel htmlFor="pass1">Password 1</InputLabel>
 						<OutlinedInput
 							label="Password 1" id="pass1" name="pass1"
@@ -91,7 +121,7 @@ export default function Login() {
 						>
 						</OutlinedInput>
 					</FormControl>
-					<FormControl fullWidth margin="normal">
+					<FormControl fullWidth margin="normal" error={passwordError}>
 						<InputLabel htmlFor="pass2">Password 2</InputLabel>
 						<OutlinedInput
 							label="Password 2" id="pass2" name="pass2"
@@ -113,13 +143,14 @@ export default function Login() {
 						>
 						</OutlinedInput>
 					</FormControl>
-					<FormControl fullWidth margin="normal">
+					<FormControl fullWidth margin="normal" error={passwordError}>
 						<InputLabel htmlFor="pass3">Password 3</InputLabel>
 						<OutlinedInput
 							label="Password 3" id="pass3" name="pass3"
 							value={pass3} onChange={(e) => setPass3(e.target.value)}
 							type={showPass3 ? 'text' : 'password'}
 							required autoComplete="pass3"
+							aria-describedby="password-error-msg"
 							endAdornment={
 								<InputAdornment position="end">
 									<IconButton
@@ -134,6 +165,9 @@ export default function Login() {
 							}
 						>
 						</OutlinedInput>
+						<FormHelperText id="password-error-msg">
+							{passwordError ? 'one or more passwords are incorrect' : ''}
+						</FormHelperText>
 					</FormControl>
 					{/* <FormControlLabel
 						control={<Checkbox value="remember" color="primary" />}

@@ -11,12 +11,18 @@ const darkTheme = createTheme({ palette: { mode: 'dark' } });
 
 export default function Home() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	var username: string | null = null;
+	const [username, setUsername] = useState('');
+	
+	const handleSuccessfulLogin = (username: string) => {
+		setUsername(username);
+		setIsLoggedIn(true);
+	};
 	
 	useEffect(() => {
-		username = localStorage.getItem('username');
-		if (username) {
+		const storedUsername = localStorage.getItem('username');
+		if (storedUsername) {
 			setIsLoggedIn(true);
+			setUsername(storedUsername);
 		}
 	}, []);
 	
@@ -30,7 +36,7 @@ export default function Home() {
 						<View />
 					</>
 				) : (
-					<Login />
+					<Login onSuccessfulLogin={handleSuccessfulLogin} />
 				)
 			}
 		</ThemeProvider>
