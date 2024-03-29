@@ -1,5 +1,25 @@
-import { Container, Collapse, Alert, AlertTitle, Link, Box, Avatar, Typography, TextField, InputLabel, InputAdornment, FormControlLabel, Checkbox, Button, Grid, IconButton, FormControl, OutlinedInput, FormHelperText } from "@mui/material";
-import { VisibilityOff, Visibility, LockOutlined, Close } from "@mui/icons-material";
+// import { Link, FormControlLabel, Checkbox, Grid } from "@mui/material";
+import Container from "@mui/material/Container";
+import Collapse from "@mui/material/Collapse";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import FormControl from "@mui/material/FormControl";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import FormHelperText from "@mui/material/FormHelperText";
+
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import CloseIcon from "@mui/icons-material/Close";
+
 import { useState } from "react";
 import axios from 'axios';
 
@@ -72,7 +92,7 @@ export default function Login({ onSuccessfulLogin }: LoginProps) {
 								aria-label="close" color="inherit" size="small"
 								onClick={() => { setServerError(false); }}
 							>
-								<Close fontSize="inherit" />
+								<CloseIcon fontSize="inherit" />
 							</IconButton>
 						}
 					>
@@ -82,7 +102,7 @@ export default function Login({ onSuccessfulLogin }: LoginProps) {
 				</Collapse>
 				
 				<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-					<LockOutlined />
+					<LockOutlinedIcon />
 				</Avatar>
 				<Typography component="h1" variant="h5">
 					sign in
@@ -114,7 +134,7 @@ export default function Login({ onSuccessfulLogin }: LoginProps) {
 										onMouseDown={handleMouseDownPassword}
 										edge="end"
 									>
-										{showPass1 ? <VisibilityOff /> : <Visibility />}
+										{showPass1 ? <VisibilityOffIcon /> : <VisibilityIcon />}
 									</IconButton>
 								</InputAdornment>
 							}
@@ -136,7 +156,7 @@ export default function Login({ onSuccessfulLogin }: LoginProps) {
 										onMouseDown={handleMouseDownPassword}
 										edge="end"
 									>
-										{showPass2 ? <VisibilityOff /> : <Visibility />}
+										{showPass2 ? <VisibilityOffIcon /> : <VisibilityIcon />}
 									</IconButton>
 								</InputAdornment>
 							}
@@ -159,7 +179,7 @@ export default function Login({ onSuccessfulLogin }: LoginProps) {
 										onMouseDown={handleMouseDownPassword}
 										edge="end"
 									>
-										{showPass3 ? <VisibilityOff /> : <Visibility />}
+										{showPass3 ? <VisibilityOffIcon /> : <VisibilityIcon />}
 									</IconButton>
 								</InputAdornment>
 							}
