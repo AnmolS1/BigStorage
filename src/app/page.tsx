@@ -11,6 +11,7 @@ const darkTheme = createTheme({ palette: { mode: 'dark' } });
 
 export default function Home() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 	const [username, setUsername] = useState('');
 	
 	const handleSuccessfulLogin = (username: string) => {
@@ -24,13 +25,16 @@ export default function Home() {
 			setIsLoggedIn(true);
 			setUsername(storedUsername);
 		}
+		setIsLoading(false);
 	}, []);
 	
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<CssBaseline />
 			{
-				isLoggedIn ? (
+				isLoading ? (
+					<></>
+				) : isLoggedIn ? (
 					<>
 						<Upload />
 						<View />

@@ -22,6 +22,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import { useState } from "react";
 import axios from 'axios';
+import Alerter from "./Alerter";
 
 interface LoginProps {
 	onSuccessfulLogin: (username: string) => void;
@@ -76,31 +77,14 @@ export default function Login({ onSuccessfulLogin }: LoginProps) {
 	
 	return (
 		<Container component="main" maxWidth="xs">
-			<Box
-				sx={{
-					marginTop: 8,
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-				}}
-			>
-				<Collapse in={serverError}>
-					<Alert
-						severity="error" sx={{ mb: 4 }}
-						action={
-							<IconButton
-								aria-label="close" color="inherit" size="small"
-								onClick={() => { setServerError(false); }}
-							>
-								<CloseIcon fontSize="inherit" />
-							</IconButton>
-						}
-					>
-						<AlertTitle>server error</AlertTitle>
-						some weirdo server error occurred, pls try again later broski
-					</Alert>
-				</Collapse>
-				
+			<Alerter onClose={() => setServerError(false)} open={serverError} severity="error" title="server error" message="some weirdo server error occurred, pls try again later"></Alerter>
+			
+			<Box sx={{
+				marginTop: 8,
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center',
+			}}>
 				<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
 					<LockOutlinedIcon />
 				</Avatar>
