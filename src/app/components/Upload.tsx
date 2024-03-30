@@ -65,6 +65,8 @@ export default function Upload() {
 		setShowAlert(true);
 		setAlertInfo(['success', 'Upload Successful!', 'all ur files are up in da cloud :)']);
 		
+		setFiles(null);
+		
 		setUploading(false);
 	};
 	
