@@ -1,11 +1,12 @@
+import { ChangeEvent, useState } from "react";
+
 import Stack from '@mui/system/Stack';
 import IconButton from '@mui/material/IconButton';
 
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-import { useState } from "react";
-import input from '../styles/Input.module.css';
 import Alerter from './Alerter';
+import upload from '../styles/Upload.module.css';
 
 export default function Upload() {
 	const [files, setFiles] = useState<FileList | null>(null);
@@ -16,7 +17,7 @@ export default function Upload() {
 	
 	const username = localStorage.getItem('username');
 	
-	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const temp = event.target.files;
 		setFiles(temp && temp.length > 0 ? temp : null);
 	};
@@ -66,7 +67,6 @@ export default function Upload() {
 		setAlertInfo(['success', 'Upload Successful!', 'all ur files are up in da cloud :)']);
 		
 		setFiles(null);
-		
 		setUploading(false);
 	};
 	
@@ -74,45 +74,45 @@ export default function Upload() {
 		<>
 			<Alerter onClose={() => setShowAlert(false)} open={showAlert} severity={alertInfo[0]} title={alertInfo[1]} message={alertInfo[2]} ></Alerter>
 			
-			<div className={input.uploadContainer}>
-				<div id="file-input-form-group" className={input.formGroup}>
+			<div className={upload.uploadContainer}>
+				<div id="file-input-form-group" className={upload.formGroup}>
 					<label htmlFor="file-input">upload files here</label>
 					
-					<div id="file-input-container" className={input.container}>
-						<div id="file-input_target" className={input.target}>
-							<div id="file-input-box" className={input.box}></div>
+					<div id="file-input-container" className={upload.container}>
+						<div id="file-input_target" className={upload.target}>
+							<div id="file-input-box" className={upload.box}></div>
 							{ !files && (
-								<div id="file-input-instructions" className={input.instructions}>
+								<div id="file-input-instructions" className={upload.instructions}>
 									<span id="file-input-drag-text">drag files here or </span>
-									<span id="file-input-choose" className={input.choose}>choose from folder</span>
+									<span id="file-input-choose" className={upload.choose}>choose from folder</span>
 								</div>
 							) }
 							{ files && (
 								<>
-									<div id="file-input-preview-heading" className={input.previewHeading}>
-										{files.length} file{files.length != 1 ? 's' : ''} selected <span className={input.choose}>change files</span>
+									<div id="file-input-preview-heading" className={upload.previewHeading}>
+										{files.length} file{files.length != 1 ? 's' : ''} selected <span className={upload.choose}>change files</span>
 									</div>
-									<div className={input.previewContainer}>
+									<div className={upload.previewContainer}>
 										{ Array.from(files).map((file: File) => (
-											<div key={file.name} id="field-input-preview" className={input.preview}>
-												<img className={input.previewImage} src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" />
+											<div key={file.name} id="field-input-preview" className={upload.preview}>
+												<img className={upload.previewImage} src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" />
 												{file.name}
 											</div>
 										)) }
 									</div>
 								</>
 							) }
-							<input id="file-input" className={input.fileInput} type="file" multiple onChange={handleFileChange} />
+							<input id="file-input" className={upload.fileInput} type="file" multiple onChange={handleFileChange} />
 						</div>
 					</div>
 				</div>
 				
-				<Stack className={input.uploadBtnContainer}>
-					<div className={input.uploadBtnLine}></div>
-					<IconButton disabled={!files || uploading} onClick={handleUpload} className={input.uploadBtn} size="large">
+				<Stack className={upload.uploadBtnContainer}>
+					<div className={upload.uploadBtnLine}></div>
+					<IconButton disabled={!files || uploading} onClick={handleUpload} className={upload.uploadBtn} size="large">
 						<CloudUploadIcon fontSize="inherit" />
 					</IconButton>
-					<div className={input.uploadBtnLine}></div>
+					<div className={upload.uploadBtnLine}></div>
 				</Stack>
 			</div>
 		</>

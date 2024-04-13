@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Collapse from "@mui/material/Collapse";
@@ -5,7 +7,6 @@ import IconButton from '@mui/material/IconButton';
 
 import CloseIcon from '@mui/icons-material/Close';
 
-import { useEffect, useState } from 'react';
 
 interface AlertProps {
 	open: boolean;
