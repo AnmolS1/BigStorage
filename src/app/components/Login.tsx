@@ -25,7 +25,7 @@ import axios from 'axios';
 import Alerter from "./Alerter";
 
 interface LoginProps {
-	onSuccessfulLogin: (username: string) => void;
+	onSuccessfulLogin: () => void;
 }
 
 export default function Login({ onSuccessfulLogin }: LoginProps) {
@@ -62,7 +62,7 @@ export default function Login({ onSuccessfulLogin }: LoginProps) {
 				} else {
 					if (pass1 == data.password1.S && pass2 == data.password2.S && pass3 == data.password3.S) {
 						localStorage.setItem('username', username);
-						onSuccessfulLogin(username);
+						onSuccessfulLogin();
 					} else {
 						setPasswordError(true);
 					}
