@@ -17,10 +17,8 @@
 /build
 
 # misc
-BigStorage.code-workspace
 .DS_Store
 *.pem
-.vscode
 
 # debug
 npm-debug.log*
@@ -37,3 +35,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+BigStorage.code-workspace
